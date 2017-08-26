@@ -147,11 +147,12 @@ func (h *Hub) GetOnlines(limit int) []interface{} {
 	onlines := make([]interface{}, 0)
 	var user hubUser
 	for _, user = range h.users {
-		v := make(map[string]string)
-		v["uid"] = user.uid
-		v["count"] = strconv.Itoa(user.count)
-		v["extra"] = user.extra
-		onlines = append(onlines, v)
+		u := map[string]string{
+			"uid":   user.uid,
+			"count": strconv.Itoa(user.count),
+			"extra": user.extra,
+		}
+		onlines = append(onlines, u)
 		count++
 
 		if count == limit {
