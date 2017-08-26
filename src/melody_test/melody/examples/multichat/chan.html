@@ -7,23 +7,26 @@
     #chat {
       text-align: left;
       background: #f1f1f1;
-      width: 700px;
-      min-height: 400px;
+      width: 500px;
+      min-height: 300px;
       padding: 20px;
     }
   </style>
 
   <body>
     <center>
-      <h3>Chat</h3>
+      <h3 id="name"></h3>
       <pre id="chat"></pre>
-      <input placeholder="say something" id="text" type="text" size="100">
+      <input placeholder="say something" id="text" type="text">
     </center>
 
     <script>
-      var url = "ws://" + window.location.host + "/ws?rid=1&uid=222&extra=1234567890";
+      var url = "ws://" + window.location.host + window.location.pathname + "/ws";
       var ws = new WebSocket(url);
       var name = "Guest" + Math.floor(Math.random() * 1000);
+      var channelName = window.location.pathname.split("/")[2];
+
+      document.getElementById("name").innerText = "Channel: " + channelName;
 
       var chat = document.getElementById("chat");
       var text = document.getElementById("text");
