@@ -37,10 +37,6 @@ func New() *Melody {
 		CheckOrigin:     func(r *http.Request) bool { return true },
 	}
 
-	//	hub := newHub()
-
-	//	go hub.run()
-
 	return &Melody{
 		Config:               newConfig(),
 		Upgrader:             upgrader,
@@ -50,9 +46,8 @@ func New() *Melody {
 		connectHandler:       func(*Hub, *Session) {},
 		disconnectHandler:    func(*Hub, *Session) {},
 		pongHandler:          func(*Hub, *Session) {},
-		//hub:                  hub,
-		hubs:     make(map[string](*Hub)),
-		hubsLock: sync.RWMutex{},
+		hubs:                 make(map[string](*Hub)),
+		hubsLock:             sync.RWMutex{},
 	}
 }
 

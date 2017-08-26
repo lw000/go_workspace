@@ -140,7 +140,7 @@ func main() {
 	})
 
 	m.HandleError(func(s *melody.Session, err error) {
-		log.Debug("HandleError error(%v)", err)
+		log.Debug("HandleError (rid:%s,uid:%s,extra:%s), error(%v)", s.Rid, s.Uid, s.Extra, err)
 	})
 
 	r.Run(":5000")
