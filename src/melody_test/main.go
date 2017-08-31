@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	auth "melody_test/auth"
 	"melody_test/melody"
 
 	"github.com/gin-gonic/gin"
@@ -52,35 +53,63 @@ func main() {
 
 	r.GET("/login", func(c *gin.Context) {
 		name := c.Query("name")
-		psd := c.Query("psd")
 		if len(name) <= 0 {
-			c.Writer.WriteString("error name empty")
+			c.Writer.WriteString("name empty")
 			return
 		}
+
+		psd := c.Query("psd")
 		if len(psd) <= 0 {
-			c.Writer.WriteString("error psd empty")
+			c.Writer.WriteString("psd empty")
 			return
 		}
 
 		c.JSON(http.StatusOK, gin.H{"name": name, "psd": psd})
 	})
 
+	r.GET("/logout", func(c *gin.Context) {
+		uid := c.Query("uid")
+		if len(uid) <= 0 {
+			c.Writer.WriteString("uid empty")
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"code": 0, "uid": uid})
+	})
+
+	r.GET("/crypto", func(c *gin.Context) {
+		data := c.Query("data")
+		if len(data) <= 0 {
+			c.Writer.WriteString("data empty")
+			return
+		}
+		m := make(map[string]string)
+		m["b64"] = auth.Base64Encode([]byte(data))
+		m["md5"] = auth.Md5Encode([]byte(data))
+
+		if str, ok := json.Marshal(m); ok == nil {
+			c.Writer.WriteString(string(str))
+		} else {
+			c.Writer.WriteString("0")
+		}
+	})
+
 	r.POST("/broadcast", func(c *gin.Context) {
 		rid := c.PostForm("rid")
 		if len(rid) <= 0 {
-			c.Writer.WriteString("error rid empty")
+			c.Writer.WriteString("rid empty")
 			return
 		}
 
 		uid := c.PostForm("uid")
 		if len(uid) <= 0 {
-			c.Writer.WriteString("error uid empty")
+			c.Writer.WriteString("uid empty")
 			return
 		}
 
 		msg := c.PostForm("msg")
 		if len(msg) <= 0 {
-			c.Writer.WriteString("error msg empty")
+			c.Writer.WriteString("msg empty")
 			return
 		}
 
@@ -92,12 +121,12 @@ func main() {
 	r.GET("/get_onlines", func(c *gin.Context) {
 		rid := c.Query("rid")
 		if len(rid) <= 0 {
-			c.Writer.WriteString("error rid empty")
+			c.Writer.WriteString("rid empty")
 			return
 		}
 		uid := c.Query("uid")
 		if len(uid) <= 0 {
-			c.Writer.WriteString("error uid empty")
+			c.Writer.WriteString("uid empty")
 			return
 		}
 
@@ -105,7 +134,7 @@ func main() {
 		var count int = 50
 		count1 := c.Query("count")
 		if len(uid) <= 0 {
-			c.Writer.WriteString("error count empty")
+			c.Writer.WriteString("count empty")
 			return
 		} else {
 			count, err = strconv.Atoi(count1)
@@ -130,18 +159,26 @@ func main() {
 	m.HandleConnect(func(h *melody.Hub, s *melody.Session) {
 		/*count := */ h.Join(s.Uid, s.Extra)
 
-		//		log.Debug("HandleConnect count:%v", count)
 	})
 
 	m.HandleDisconnect(func(h *melody.Hub, s *melody.Session) {
 		/*count := */ h.Leave(s.Uid, s.Extra)
-
-		//		log.Debug("HandleDisconnect count:%v", count)
 	})
 
 	m.HandleError(func(s *melody.Session, err error) {
-		log.Debug("HandleError (rid:%s,uid:%s,extra:%s), error(%v)", s.Rid, s.Uid, s.Extra, err)
+		log.Debug("HandleError (rid:%s,uid:%s), error(%v)", s.Rid, s.Uid, err)
 	})
+
+	man := &Student{Person{"liwei", 10, "深圳市南山区"}, "深圳大学", 100.00}
+	man.test()
+
+	man1 := new(Student)
+	man1.Name = "liwei"
+	man1.Age = 10
+	man1.Address = "深圳市南山区"
+	man1.Loan = 100.00
+	man1.School = "深圳大学"
+	man1.test()
 
 	r.Run(":5000")
 }

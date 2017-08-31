@@ -2,6 +2,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"runtime"
@@ -66,17 +67,132 @@ func sclie_test() {
 	copy(slice2, slice1) // 只会复制slice1的前3个元素到slice2中
 }
 
+func array_test() {
+	var numbers []int
+	numbers = make([]int, 5, 5)
+	numbers = append(numbers, 1, 2, 3, 4, 5)
+
+	var numbers1 []int
+	numbers1 = make([]int, 5, 5)
+	numbers1 = []int{10, 20, 30, 40, 50}
+	copy(numbers, numbers1)
+	fmt.Println(numbers, len(numbers), cap(numbers), numbers1)
+}
+
+func json_test() {
+	slcD := []string{"apple", "peach", "pear"}
+	slcB, _ := json.Marshal(slcD)
+	log.Debug(string(slcB))
+}
+
+func interface_test() {
+
+}
+
+func chan_test() {
+	//		chm := make(chan int)
+	//		chn := make(chan int)
+	//		quit := make(chan bool)
+	var chm = make(chan int)
+	var chn = make(chan int)
+	var quit = make(chan bool)
+	chm = make(chan int)
+	chn = make(chan int)
+	quit = make(chan bool)
+	go func(m chan int, n chan int) {
+		i := 0
+		j := 50
+		for i < 50 {
+			m <- i
+			n <- j
+			i++
+			j--
+		}
+		quit <- true
+	}(chm, chn)
+
+ForEnd:
+	for {
+		select {
+		case m := <-chm:
+			{
+				log.Debug("m : %d", m)
+			}
+		case n := <-chn:
+			{
+				log.Debug("n : %d", n)
+			}
+		case <-quit:
+			{
+				break ForEnd
+			}
+		default:
+			time.Sleep(time.Millisecond * 10)
+		}
+	}
+	fmt.Println("over")
+}
+
+func map_test() {
+	defer func() {
+		log.Debug("map_test func end.")
+	}()
+
+	{
+		var m map[string]string
+		m = make(map[string]string)
+		m["1"] = "1111111111111"
+		m["2"] = "2222222222222"
+		m["3"] = "3333333333333"
+
+		for k, v := range m {
+			fmt.Println(k, v)
+		}
+
+		c, ok := m["1"]
+		if ok {
+			log.Debug("c: %v", c)
+		} else {
+			log.Error("error")
+		}
+
+		if c1, ok1 := m["1"]; ok1 {
+			log.Debug("c1: %v", c1)
+		} else {
+			log.Error("error")
+		}
+	}
+
+	{
+		m := make(map[string]interface{})
+		m["1"] = []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
+		n := make(map[string]string)
+		n["1"] = "1111111111111111"
+		n["2"] = "2222222222222222"
+		n["3"] = "3333333333333333"
+		n["4"] = "4444444444444444"
+		m["2"] = n
+		m["3"] = "11111111111111111"
+
+		log.Debug("m: %v", m)
+		str, err := json.Marshal(m)
+		if err == nil {
+			log.Debug("json: %s", str)
+		}
+
+		o := make(map[string]interface{})
+		if err := json.Unmarshal(str, o); err == nil {
+			log.Debug("o: %v", o)
+		}
+	}
+}
+
 func getName() (firstName, middleName, lastName, nickName string) {
 	firstName = "May"
 	nickName = "M"
 	lastName = "Chen"
 	nickName = "Babe"
 	return firstName, nickName, lastName, nickName
-}
-
-func modify(array [5]int) {
-	array[0] = 10 // 试图修改数组的第一个元素
-	fmt.Println("In modify(), array values:", array)
 }
 
 func calc_sum(values []int, chanResult chan int) {
@@ -95,38 +211,28 @@ func main() {
 	log.Debug(len(args))
 	log.Debug(args)
 
-	for_test()
+	//	for_test()
 
-	if_test()
+	//	if_test()
 
-	switch_test()
+	//	switch_test()
 
 	sclie_test()
 
-	_, _, lastName, nickName := getName()
-	fmt.Println(fmt.Sprintf("lastName: %s nickName: %s", lastName, nickName))
+	array_test()
 
-	array := [5]int{1, 2, 3, 4, 5} // 定义并初始化一个数组
-	modify(array)
-	fmt.Println(array)
+	interface_test()
 
-	{
-		x, y := func(i, j int) (m, n int) { // x y 为函数返回值
-			return j, i
-		}(1, 9) // 直接创建匿名函数并执行
-		fmt.Println(x, y)
-	}
+	map_test()
+
+	//	_, _, lastName, nickName := getName()
+	//	log.Debug("lastName: %s nickName: %s", lastName, nickName)
 
 	//	{
-	//		var numbers []int
-	//		numbers = make([]int, 5, 5)
-	//		numbers = append(numbers, 1, 2, 3, 4, 5)
-
-	//		var numbers1 []int
-	//		numbers1 = make([]int, 5, 5)
-	//		numbers1 = []int{10, 20, 30, 40, 50}
-	//		copy(numbers, numbers1)
-	//		fmt.Println(numbers, len(numbers), cap(numbers), numbers1)
+	//		x, y := func(i, j int) (m, n int) { // x y 为函数返回值
+	//			return j, i
+	//		}(1, 9) // 直接创建匿名函数并执行
+	//		fmt.Println(x, y)
 	//	}
 
 	{
@@ -139,78 +245,16 @@ func main() {
 		fmt.Printf("%d + %d = %d\n", sum1, sum2, sum1+sum2)
 	}
 
-	//	var c1, c2, c3 chan int
-	//	var i1, i2 int
-	//	select {
-	//	case i1 = <-c1:
-	//		fmt.Printf("received ", i1, " from c1\n")
-	//	case c2 <- i2:
-	//		fmt.Printf("sent ", i2, " to c2\n")
-	//	case i3, ok := (<-c3): // same as: i3, ok := <-c3
-	//		if ok {
-	//			fmt.Printf("received ", i3, " from c3\n")
-	//		} else {
-	//			fmt.Printf("c3 is closed\n")
-	//		}
-	//	default:
-	//		fmt.Printf("no communication\n")
+	//	{
+	//		var ccc = 0
+	//		go func(c int) {
+	//			for {
+	//				fmt.Printf("%d\n", c)
+	//				c = c + 1
+	//				time.Sleep(time.Microsecond * 1000)
+	//			}
+	//		}(ccc)
 	//	}
 
-	//	var ccc = 0
-
-	//	for {
-	//		fmt.Printf("%d\n", ccc)
-	//		ccc = ccc + 1
-	//		time.Sleep(time.Microsecond * 50)
-	//
-	//	}
-
-	var m map[string]string
-	m = make(map[string]string)
-	m["1"] = "1111111111111"
-	m["2"] = "1111111111111"
-	m["3"] = "1111111111111"
-
-	for k, v := range m {
-		fmt.Println(k, v)
-	}
-
-	{
-		chm := make(chan int)
-		chn := make(chan int)
-		quit := make(chan bool)
-		go func(m chan int, n chan int) {
-			i := 0
-			j := 100
-			for i < 100 {
-				m <- i
-				n <- j
-				i++
-				j--
-			}
-			quit <- true
-		}(chm, chn)
-
-	ForEnd:
-		for {
-			select {
-			case m := <-chm:
-				{
-					fmt.Print("m : %d", m)
-				}
-			case n := <-chn:
-				{
-					fmt.Print("n : %d", n)
-				}
-			case <-quit:
-				{
-					break ForEnd
-				}
-			default:
-				time.Sleep(time.Millisecond * 10)
-			}
-		}
-
-	}
-	fmt.Println("over")
+	chan_test()
 }

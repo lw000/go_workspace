@@ -9,24 +9,26 @@ import (
 )
 
 var (
-	Conf     *Config
-	confFile string
+	Conf *Config
+
+//	confFile string
 )
 
-func init() {
-	flag.StringVar(&confFile, "c", "./cofnfig.conf", " set config file path")
-}
+var confFile = *flag.String("config_file", "./cofnfig.conf", " please sset config file path...")
+
+//func init() {
+//	flag.StringVar(&confFile, "c", "./cofnfig.conf", " set config file path")
+//}
 
 type Config struct {
-	// base section
-	host_address string
-	api_key      string
+	HostAddress string
+	ApiKey      string
 }
 
 func NewConfig() *Config {
 	return &Config{
-		host_address: "127.0.0.1:5008",
-		api_key:      "",
+		HostAddress: "127.0.0.1:5008",
+		ApiKey:      "",
 	}
 }
 
@@ -38,18 +40,19 @@ func InitConfig() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	Conf.host_address = getString(confMap, "host_address")
-	Conf.api_key = getString(confMap, "api_key")
+	Conf.HostAddress = getString(confMap, "HostAddress")
+	Conf.ApiKey = getString(confMap, "ApiKey")
 
-	log.Println("api_key:", Conf.api_key)
-	log.Println("host address:", Conf.host_address)
+	log.Println("ApiKey:", Conf.ApiKey)
+	log.Println("HostAddress:", Conf.HostAddress)
 }
 
-func getInt(config map[string]string, key string) int {
-	value, ok := config[key]
+func getInt(cfg map[string]string, key string) int {
+	value, ok := cfg[key]
 	if !ok {
 		log.Fatalf("key:%s non exist", key)
 	}
+
 	n, err := strconv.Atoi(value)
 	if err != nil {
 		log.Fatalf("key:%s is't interger", key)
@@ -57,16 +60,16 @@ func getInt(config map[string]string, key string) int {
 	return n
 }
 
-func getString(config map[string]string, key string) string {
-	value, ok := config[key]
+func getString(cfg map[string]string, key string) string {
+	value, ok := cfg[key]
 	if !ok {
 		log.Fatalf("key:%s non exist", key)
 	}
 	return value
 }
 
-func getOptString(config map[string]string, key string) string {
-	value, ok := config[key]
+func getOptString(cfg map[string]string, key string) string {
+	value, ok := cfg[key]
 	if !ok {
 		return ""
 	}

@@ -10,9 +10,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"time"
 
 	log "github.com/thinkboy/log4go"
+	"github.com/voxelbrain/goptions"
 )
 
 type Person struct {
@@ -24,23 +26,47 @@ type Person struct {
 	Count       int    `json:",string"`
 }
 
-func HttpGet(url string) (body string) {
+func HttpGet(url string) (body []byte) {
 	resp, err := http.Get("http://www.baidu.com")
 	if err != nil {
-		// handle error
+		return
 	}
 	defer resp.Body.Close()
 
 	res, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		// handle error
+		return
 	}
-	body = string(res)
+
+	body = res
+
 	return
 }
 
 func main() {
 	defer time.Sleep(time.Second)
+
+	{
+		options := struct {
+			Server   string        `goptions:"-s, --server, obligatory, description='Server to connect to'"`
+			Password string        `goptions:"-p, --password, description='Don\\'t prompt for password'"`
+			Timeout  time.Duration `goptions:"-t, --timeout, description='Connection timeout in seconds'"`
+			Help     goptions.Help `goptions:"-h, --help, description='Show this help'"`
+
+			goptions.Verbs
+			Execute struct {
+				Command string   `goptions:"--command, mutexgroup='input', description='Command to exectute', obligatory"`
+				Script  *os.File `goptions:"--script, mutexgroup='input', description='Script to exectute', rdonly"`
+			} `goptions:"execute"`
+			Delete struct {
+				Path  string `goptions:"-n, --name, obligatory, description='Name of the entity to be deleted'"`
+				Force bool   `goptions:"-f, --force, description='Force removal'"`
+			} `goptions:"delete"`
+		}{ // Default values goes here
+			Timeout: 10 * time.Second,
+		}
+		goptions.ParseAndFail(&options)
+	}
 
 	{
 		m := md5.New()
@@ -65,12 +91,18 @@ func main() {
 		fmt.Println("age :", *age)
 		fmt.Println("name :", *name)
 		fmt.Println("address:", address)
-
 	}
-	log.Debug("OK")
 
 	{
-		var p *Person = &Person{
+		//		var p *Person = &Person{
+		//			Name:        "brainwu",
+		//			Age:         21,
+		//			Gender:      true,
+		//			Profile:     "I am Wujunbin",
+		//			OmitContent: "OmitConent",
+		//		}
+
+		p := &Person{
 			Name:        "brainwu",
 			Age:         21,
 			Gender:      true,
@@ -78,15 +110,13 @@ func main() {
 			OmitContent: "OmitConent",
 		}
 
-		if bs, err := json.Marshal(&p); err != nil {
-			panic(err)
+		if str, err := json.Marshal(p); err == nil {
+			fmt.Println(string(str))
 		} else {
-			//result --> {"username":"brainwu","Age":21,"Gender":true,"Profile":"I am Wujunbin","Count":"0"}
-			fmt.Println(string(bs))
+			panic(err)
 		}
 	}
 
 	var body = HttpGet("http://www.baidu.com")
-	log.Debug(body)
-
+	log.Debug("%s", string(body))
 }
