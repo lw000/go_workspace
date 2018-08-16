@@ -17,7 +17,7 @@ var (
 
 func InitMysql() {
 	var err error
-	db, err = sql.Open("mysql", "lw:qazxsw123@/app_project")
+	db, err = sql.Open("mysql", "liwei:123456@tcp(192.168.1.121:3306)/app_project")
 	if err != nil {
 		panic(err)
 	}
@@ -32,7 +32,7 @@ func InitMysql() {
 
 func main() {
 	var err error
-	db, err = sql.Open("mysql", "lw:qazxsw123@/app_project")
+	db, err = sql.Open("mysql", "liwei:123456@tcp(192.168.1.121:3306)/app_project")
 	if err != nil {
 		panic(err)
 	}
