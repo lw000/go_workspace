@@ -26,7 +26,6 @@ func handleClient(conn net.Conn) {
 		fmt.Println("recv msg:", string(buf[0:n]))
 
 		conn.Write([]byte("world!"))
-
 	}
 }
 
@@ -56,5 +55,4 @@ func main() {
 
 		go handleClient(conn)
 	}
-
 }
