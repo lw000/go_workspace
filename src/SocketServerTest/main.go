@@ -57,7 +57,8 @@ func checkError(err error) {
 }
 
 func main() {
-	s, err := net.Listen("tcp", ":7777")
+	host := ":7777"
+	s, err := net.Listen("tcp", host)
 	checkError(err)
 
 	defer func() {
@@ -67,7 +68,7 @@ func main() {
 		}
 	}()
 
-	log.Debug("server start... port:[12563]")
+	log.Debug("server start... port:[%s]", host)
 
 	for {
 		conn, err := s.Accept()
