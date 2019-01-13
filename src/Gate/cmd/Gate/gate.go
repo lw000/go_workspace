@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	log "github.com/thinkboy/log4go"
+	"github.com/vmihailenco/msgpack"
 	"os"
 	"os/signal"
 )
@@ -85,6 +86,20 @@ func installSignal() {
 func Test() {
 	log.Info(lwutilty.UUID())
 	log.Info(string(lwauth.Md5([]byte("111111111111111111111"))))
+
+	in := map[string]string{
+		"foo":   "mwerwerewrwr",
+		"liwei": "sdffffdsfsf",
+	}
+
+	data, err := msgpack.Marshal(in)
+	if err != nil {
+		return
+	}
+
+	if len(data) != 0 {
+		log.Info(data)
+	}
 }
 
 func main() {
