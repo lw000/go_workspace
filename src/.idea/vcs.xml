@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/Microsoft/go-winio" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/Salvatore-Giordano/gin-redis-ip-limiter" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/agtorre/gocolorize" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/boj/redistore" vcs="Git" />
@@ -12,6 +13,7 @@
     <mapping directory="$PROJECT_DIR$/github.com/gin-contrib/sessions" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/gin-contrib/sse" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/gin-gonic/gin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/go-mangos/mangos" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/go-sql-driver/mysql" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/golang/protobuf" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/gomodule/redigo" vcs="Git" />
@@ -28,6 +30,8 @@
     <mapping directory="$PROJECT_DIR$/github.com/kataras/golog" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/kataras/iris" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/kataras/pio" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/kr/pretty" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/kr/text" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/labstack/echo" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/labstack/gommon" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/mattn/go-colorable" vcs="Git" />
@@ -42,12 +46,15 @@
     <mapping directory="$PROJECT_DIR$/github.com/revel/cmd" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/revel/config" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/revel/log15" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/satori/go.uuid" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/thinkboy/log4go" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/toolkits/file" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/ugorji/go" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/utrack/gin-csrf" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/valyala/fasttemplate" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/vmihailenco/msgpack" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/voxelbrain/goptions" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gopkg.in/check.v1" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/gopkg.in/fsnotify/fsnotify.v1" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/gopkg.in/go-playground/validator.v8" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/gopkg.in/natefinch/lumberjack.v2" vcs="Git" />

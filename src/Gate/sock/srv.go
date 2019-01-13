@@ -16,7 +16,7 @@ func init() {
 func handleConnect(conn net.Conn) {
 	go func() {
 		defer func() {
-			err := conn.Close() // we're finished with this client
+			err := conn.Close()
 			if err != nil {
 
 			}
@@ -56,7 +56,7 @@ func handleConnect(conn net.Conn) {
 	}()
 }
 
-func RunServer() {
+func StartSrv() {
 	tcpAddr, err := net.ResolveTCPAddr("tcp", ":7777")
 	if err != nil {
 		log.Error("fatal error: %s", err.Error())
@@ -81,6 +81,6 @@ func RunServer() {
 	}
 }
 
-func Stop() {
+func StopSrv() {
 
 }

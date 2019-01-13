@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func RunClient() {
+func StartCli() {
 	conn, err := net.Dial("tcp", "127.0.0.1:7777")
 	defer func() {
 		err := conn.Close()
@@ -47,4 +47,8 @@ func RunClient() {
 
 		time.Sleep(time.Millisecond * time.Duration(1000))
 	}
+}
+
+func StopCli() {
+
 }

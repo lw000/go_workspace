@@ -6,14 +6,15 @@ import (
 )
 
 type Packet struct {
-	ver uint32
-	mid uint32
-	sid uint32
-	ext uint32
-	buf *bytes.Buffer
+	ver     uint16
+	mid     uint16
+	sid     uint16
+	eventId uint32
+	ext     uint32
+	buf     *bytes.Buffer
 }
 
-func NewPacket(mid, sid uint32) *Packet {
+func NewPacket(mid, sid uint16) *Packet {
 	return &Packet{
 		ver: 1,
 		mid: mid,
@@ -46,6 +47,11 @@ func (p *Packet) writeHead() error {
 		return err
 	}
 
+	err = binary.Write(p.buf, binary.LittleEndian, p.eventId)
+	if err != nil {
+		return err
+	}
+
 	err = binary.Write(p.buf, binary.LittleEndian, p.ext)
 	if err != nil {
 		return err
@@ -67,6 +73,11 @@ func (p *Packet) readHead() error {
 	}
 
 	err = binary.Read(p.buf, binary.LittleEndian, &p.sid)
+	if err != nil {
+		return err
+	}
+
+	err = binary.Read(p.buf, binary.LittleEndian, &p.eventId)
 	if err != nil {
 		return err
 	}
@@ -121,12 +132,16 @@ func (p *Packet) Decode() ([]byte, error) {
 	return data, nil
 }
 
-func (p *Packet) Mid() uint32 {
+func (p *Packet) Mid() uint16 {
 	return p.mid
 }
 
-func (p *Packet) Sid() uint32 {
+func (p *Packet) Sid() uint16 {
 	return p.sid
+}
+
+func (p *Packet) EventId() uint32 {
+	return p.eventId
 }
 
 func (p *Packet) Ext() uint32 {
