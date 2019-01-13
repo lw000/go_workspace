@@ -5,11 +5,10 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	log "github.com/jeanphorn/log4go"
 	"io/ioutil"
 	"strconv"
 	"time"
-
-	log "github.com/jeanphorn/log4go"
 )
 
 type shared_data struct {
@@ -33,25 +32,34 @@ type ResourceString struct {
 
 var msgqueue = make(chan shared_data, 10)
 
-func main() {
-	log.Debug("ok")
-
-	{
-		context, err := ioutil.ReadFile("./xml.xml")
-		if err != nil {
-			log.Error(err)
-		}
-		var restut StringResources
-		err = xml.Unmarshal(context, &restut)
-		if err != nil {
-			log.Error(err)
-		}
-		log.Debug(restut)
-		log.Debug(restut.ResourceString)
-		for _, o := range restut.ResourceString {
-			log.Debug(o.StringName + "===" + o.InnerText)
-		}
+func readXml() error {
+	data, err := ioutil.ReadFile("./xml.xml")
+	if err != nil {
+		log.Error(err)
+		return err
 	}
+
+	var restut StringResources
+	err = xml.Unmarshal(data, &restut)
+	if err != nil {
+		log.Error(err)
+		return err
+	}
+
+	log.Debug(restut)
+	log.Debug(restut.ResourceString)
+
+	for _, o := range restut.ResourceString {
+		log.Debug(o.StringName + "===" + o.InnerText)
+	}
+
+	return nil
+}
+
+func main() {
+	defer func() {
+		time.Sleep(time.Second * time.Duration(1))
+	}()
 
 	{
 		m := map[string][]string{
@@ -73,7 +81,6 @@ func main() {
 
 	{
 		a := []int32{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-
 		for i := 0; i < len(a); i++ {
 			fmt.Printf("a[%d]:%d\n", i, a[i])
 		}
@@ -100,6 +107,7 @@ func main() {
 			fmt.Printf("a[%d]:%d\n", i, a[i])
 		}
 	}
+
 	{
 		v, err := strconv.ParseInt("1111", 10, 64)
 		if err != nil {
@@ -128,14 +136,9 @@ func main() {
 		a := []shared_data{
 			{100, 1, "levi", "msg", "ok"},
 			{100, 2, "levi", "msg", "ok"},
-			{100, 3, "levi", "msg", "ok"},
-			{100, 4, "levi", "msg", "ok"},
-			{100, 5, "levi", "msg", "ok"},
 		}
 		for _, v := range a {
 			msgqueue <- v
 		}
 	}()
-
-	time.Sleep(time.Second * 1)
 }

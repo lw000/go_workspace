@@ -2,9 +2,7 @@
 package main
 
 import (
-	"fmt"
-	//	"io/ioutil"
-
+	"log"
 	"net"
 	"os"
 	"time"
@@ -12,48 +10,42 @@ import (
 
 func checkError(err error) {
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "fatal error: %s", err.Error())
+		log.Println("fatal error: %s", err.Error())
 		os.Exit(1)
 	}
 }
 
-func handleRecv(conn net.Conn) {
-	buf := make([]byte, 100)
-
-	for {
-		n, err := conn.Read(buf)
-
-		if err != nil {
-			fmt.Println("server conn closed")
-			return
-		}
-
-		fmt.Println("recv msg:", string(buf[0:n]))
-
-		time.Sleep(time.Second * 1)
-	}
-}
-
 func main() {
-	conn, err := net.Dial("tcp", "127.0.0.1:12563")
+	conn, err := net.Dial("tcp", "127.0.0.1:7777")
 	defer conn.Close()
 
 	checkError(err)
 
-	buf := make([]byte, 100)
-
+	buf := make([]byte, 1024)
 	for {
-		conn.Write([]byte("Hello!"))
-
-		n, err := conn.Read(buf)
-
+		var n int
+		n, err = conn.Write([]byte("Hello!"))
 		if err != nil {
-			fmt.Println("conn closed")
-			return
+			log.Println("connected closed")
+			break
 		}
 
-		fmt.Println("recv server msg:", string(buf[0:n]))
+		if n > 0 {
 
-		time.Sleep(time.Second * time.Duration(1))
+		}
+
+		n, err = conn.Read(buf)
+		if err != nil {
+			log.Println("connected closed")
+			break
+		}
+
+		if n > 0 {
+
+		}
+
+		log.Printf("read:%s\n", string(buf[0:n]))
+
+		time.Sleep(time.Millisecond * time.Duration(1000))
 	}
 }

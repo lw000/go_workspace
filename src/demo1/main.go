@@ -8,12 +8,11 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
+	//"github.com/labstack/gommon/log"
 	"io/ioutil"
 	"net/http"
-
-	//	"os"
 	"time"
-	//	log "github.com/thinkboy/log4go"
 	//	"github.com/voxelbrain/goptions"
 )
 
@@ -26,25 +25,48 @@ type Person struct {
 	Count       int    `json:",string"`
 }
 
-func HttpGet(url string) (body []byte) {
-	resp, err := http.Get("http://www.baidu.com")
+func (p *Person) Marshal() error {
+	if str, err := json.Marshal(p); err == nil {
+		log.Println(string(str))
+	} else {
+		log.Println(err)
+	}
+	return nil
+}
+
+func HttpGet(url string) (data []byte, err error) {
+	var resp *http.Response
+	resp, err = http.Get("http://www.baidu.com")
 	if err != nil {
-		return
+		return nil, err
 	}
 	defer resp.Body.Close()
 
-	res, err := ioutil.ReadAll(resp.Body)
+	var res []byte
+	res, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	body = res
+	data = res
+	log.Println(string(data))
 
 	return
 }
 
+func md5Test() {
+	m := md5.New()
+	n, err := m.Write([]byte("111111111"))
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt.Println(n, hex.EncodeToString(m.Sum(nil)))
+}
+
 func main() {
-	defer time.Sleep(time.Second)
+	defer func() {
+		time.Sleep(time.Second)
+	}()
 
 	//	{
 	//		options := struct {
@@ -68,14 +90,7 @@ func main() {
 	//		goptions.ParseAndFail(&options)
 	//	}
 
-	{
-		m := md5.New()
-		n, err := m.Write([]byte("111111111"))
-		if err != nil {
-			fmt.Println(err.Error())
-		}
-		fmt.Println(n, hex.EncodeToString(m.Sum(nil)))
-	}
+	md5Test()
 
 	{
 		married := flag.Bool("married", false, "Are you married?")
@@ -95,14 +110,6 @@ func main() {
 	}
 
 	{
-		//		var p *Person = &Person{
-		//			Name:        "brainwu",
-		//			Age:         21,
-		//			Gender:      true,
-		//			Profile:     "I am Wujunbin",
-		//			OmitContent: "OmitConent",
-		//		}
-
 		p := &Person{
 			Name:        "brainwu",
 			Age:         21,
@@ -110,14 +117,18 @@ func main() {
 			Profile:     "I am Wujunbin",
 			OmitContent: "OmitConent",
 		}
-
-		if str, err := json.Marshal(p); err == nil {
-			fmt.Println(string(str))
-		} else {
-			panic(err)
-		}
+		p.Marshal()
 	}
 
-	//	var body = HttpGet("http://www.baidu.com")
-	//	log.Debug("%s", string(body))
+	{
+		var (
+			data []byte
+			err  error
+		)
+		data, err = HttpGet("http://www.baidu.com")
+		if err != nil {
+
+		}
+		log.Println("%s", string(data))
+	}
 }

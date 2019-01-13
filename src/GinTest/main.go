@@ -38,7 +38,6 @@ func main() {
 
 	r := gin.Default()
 	r.Use(middleware.Cros())
-
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "hello world.")
 	})
