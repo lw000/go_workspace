@@ -9,6 +9,7 @@
         <function importPath="fmt" name="Println" />
         <function importPath="fmt" name="Print" />
         <function importPath="github.com/jeanphorn/log4go" name="Error" />
+        <function importPath="github.com/thinkboy/log4go" name="Error" />
       </functions>
     </inspection_tool>
     <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
