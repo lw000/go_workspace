@@ -31,7 +31,7 @@ func NewHub() *Hub {
 	return &Hub{}
 }
 
-func (h *Hub) Register(mid, sid uint16, f HandlerFunc) error {
+func (h *Hub) Register(mid, sid uint16, f HandlerFunc) {
 	k := Key{mid: mid, sid: mid}
 	v, ok := h.m.Load(k)
 	if ok {
@@ -42,7 +42,6 @@ func (h *Hub) Register(mid, sid uint16, f HandlerFunc) error {
 		hd.Add(f)
 		h.m.Store(k, hd)
 	}
-	return nil
 }
 
 func (h *Hub) DistMessage(mid, sid uint16, eventId uint32, data []byte) {
