@@ -25,7 +25,7 @@ func Base64Decode(src string) ([]byte, error) {
 	return base64.StdEncoding.DecodeString(src)
 }
 
-func Md5Encode(src []byte) string {
+func MD5(src []byte) string {
 	if len(src) == 0 {
 		return ""
 	}

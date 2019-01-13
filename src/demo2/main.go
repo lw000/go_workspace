@@ -4,10 +4,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"os"
-	"runtime"
+
+	//	"os"
+
+	//	"runtime"
 	"time"
 
+	//	"github.com/henrylee2cn/pholcus/exec"
+	"github.com/json-iterator/go"
 	log "github.com/thinkboy/log4go"
 )
 
@@ -29,7 +33,6 @@ func for_test() {
 }
 
 func if_test() {
-
 	if a := 0; a < 5 {
 		fmt.Println("a < 100")
 	} else {
@@ -57,7 +60,6 @@ func switch_test() {
 	case 2:
 		fmt.Println("2")
 	default:
-
 	}
 }
 
@@ -196,6 +198,12 @@ func getName() (firstName, middleName, lastName, nickName string) {
 }
 
 func calc_sum(values []int, chanResult chan int) {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println(r)
+		}
+	}()
+
 	sum := 0
 
 	for _, value := range values {
@@ -205,11 +213,54 @@ func calc_sum(values []int, chanResult chan int) {
 }
 
 func main() {
-	runtime.GOMAXPROCS(runtime.NumCPU())
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println(err)
+		}
+	}()
 
-	var args = os.Args
-	log.Debug(len(args))
-	log.Debug(args)
+	var MakecoreData *int = nil
+	//	MakecoreData = new(int)
+	*MakecoreData = 10000
+	fmt.Println(*MakecoreData)
+	fmt.Println("hello world")
+
+	return
+
+	//	runtime.GOMAXPROCS(runtime.NumCPU())
+
+	//	var args = os.Args
+	//	log.Debug(len(args))
+	//	log.Debug(args)
+
+	{
+		type ColorGroup struct {
+			ID     int
+			Name   string
+			Colors []string
+		}
+
+		group := ColorGroup{
+			ID:     1,
+			Name:   "Reds",
+			Colors: []string{"Crimson", "Red", "Ruby", "Maroon"},
+		}
+
+		b, err := json.Marshal(group)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		fmt.Println(string(b))
+
+		var json_iterator = jsoniter.ConfigCompatibleWithStandardLibrary
+		b, err = json_iterator.Marshal(group)
+		if err != nil {
+
+		}
+		fmt.Println(string(b))
+	}
+
+	return
 
 	//	for_test()
 

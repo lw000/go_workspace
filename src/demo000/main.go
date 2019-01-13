@@ -66,7 +66,7 @@ func main() {
 			log.Debug(string(data))
 		}
 		var m1 map[string][]string
-		if json.Unmarshal(data, &m1); err == nil {
+		if err = json.Unmarshal(data, &m1); err == nil {
 			log.Debug(m1)
 		}
 	}

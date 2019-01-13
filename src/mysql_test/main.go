@@ -40,7 +40,7 @@ func main() {
 
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(2)
-	//	db.SetConnMaxLifetime(time.Hour)
+	db.SetConnMaxLifetime(time.Hour * time.Duration(5))
 
 	if err = db.Ping(); err != nil {
 		panic(err)

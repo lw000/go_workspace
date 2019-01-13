@@ -12,6 +12,10 @@ func Cros() gin.HandlerFunc {
 			return true
 		}
 
+		if origin == "localhost:8080" {
+			return true
+		}
+
 		return false
 	}
 	cfg.AllowMethods = []string{"GET", "POST"}

@@ -10,10 +10,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
 	//	"os"
 	"time"
-
-	log "github.com/thinkboy/log4go"
+	//	log "github.com/thinkboy/log4go"
 	//	"github.com/voxelbrain/goptions"
 )
 
@@ -71,9 +71,10 @@ func main() {
 	{
 		m := md5.New()
 		n, err := m.Write([]byte("111111111"))
-		fmt.Println(fmt.Sprint("n = %d err = %d", n, err))
-
-		fmt.Println(hex.EncodeToString(m.Sum(nil)))
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println(n, hex.EncodeToString(m.Sum(nil)))
 	}
 
 	{
@@ -117,6 +118,6 @@ func main() {
 		}
 	}
 
-	var body = HttpGet("http://www.baidu.com")
-	log.Debug("%s", string(body))
+	//	var body = HttpGet("http://www.baidu.com")
+	//	log.Debug("%s", string(body))
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/Salvatore-Giordano/gin-redis-ip-limiter" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/agtorre/gocolorize" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/boj/redistore" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/dchest/uniuri" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/denisenkom/go-mssqldb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/dgrijalva/jwt-go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/gin-contrib/cors" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/gin-contrib/sessions" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/gin-contrib/sse" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/gin-gonic/gin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/go-sql-driver/mysql" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/golang/protobuf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/gomodule/redigo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/gorilla/context" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/gorilla/securecookie" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/gorilla/sessions" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/gorilla/websocket" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/henrylee2cn/pholcus" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/inconshreveable/log15" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/jeanphorn/log4go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/jessevdk/go-flags" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/jimlawless/cfg" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/json-iterator/go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/kataras/golog" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/kataras/iris" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/kataras/pio" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/labstack/echo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/labstack/gommon" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/mattn/go-colorable" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/mattn/go-isatty" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/modern-go/concurrent" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/modern-go/reflect2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/muesli/cache2go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/olahol/melody" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/patrickmn/go-cache" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/pkg/errors" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/quasoft/memstore" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/revel/cmd" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/revel/config" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/revel/log15" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/thinkboy/log4go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/toolkits/file" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/ugorji/go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/utrack/gin-csrf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/valyala/fasttemplate" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/github.com/voxelbrain/goptions" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gopkg.in/fsnotify/fsnotify.v1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gopkg.in/go-playground/validator.v8" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gopkg.in/natefinch/lumberjack.v2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gopkg.in/olahol/melody.v1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gopkg.in/stack.v0" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gopkg.in/yaml.v2" vcs="Git" />
+  </component>
+</project>

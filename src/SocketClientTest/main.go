@@ -54,6 +54,6 @@ func main() {
 
 		fmt.Println("recv server msg:", string(buf[0:n]))
 
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Second * time.Duration(1))
 	}
 }
