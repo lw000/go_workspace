@@ -13,43 +13,39 @@ import (
 )
 
 func PacketTest() {
-	for {
-		req := example.ReqRegisterService{SrvId: 1000, SrvType: 0}
-		log.Info("req:[%d] %v", time.Now().Unix(), req)
-		reqBuf, err := proto.Marshal(&req)
-		if err != nil {
+	req := example.ReqRegisterService{SrvId: 1000, SrvType: 0}
+	log.Info("req:[%d] %v", time.Now().Unix(), req)
+	reqBuf, err := proto.Marshal(&req)
+	if err != nil {
 
-		}
-
-		pkReq := lwpacket.NewPacket(1111, 2222)
-		err = pkReq.Encode(reqBuf)
-		if err != nil {
-
-		}
-
-		pkAck := lwpacket.NewPacketWithData(pkReq.Bytes())
-		data, err := pkAck.Decode()
-		if data != nil {
-
-		}
-
-		var req1 = example.ReqRegisterService{}
-		err = proto.Unmarshal(pkAck.Bytes(), &req1)
-		if err != nil {
-
-		}
-
-		log.Info("ack:[%d] %v", time.Now().Unix(), req1)
-
-		//ack := example.AckRegisterService{Code:100, Data:"1111111111"}
-		//log4go.Debug(ack)
-		//ack_buf, err := proto.Marshal(&ack)
-		//if err != nil {
-		//
-		//}
-
-		time.Sleep(time.Second * time.Duration(1))
 	}
+
+	pkReq := lwpacket.NewPacket(1111, 2222)
+	err = pkReq.Encode(reqBuf)
+	if err != nil {
+
+	}
+
+	pkAck := lwpacket.NewPacketWithData(pkReq.Bytes())
+	data, err := pkAck.Decode()
+	if data != nil {
+
+	}
+
+	var req1 = example.ReqRegisterService{}
+	err = proto.Unmarshal(pkAck.Bytes(), &req1)
+	if err != nil {
+
+	}
+
+	log.Info("ack:[%d] %v", time.Now().Unix(), req1)
+
+	//ack := example.AckRegisterService{Code:100, Data:"1111111111"}
+	//log4go.Debug(ack)
+	//ack_buf, err := proto.Marshal(&ack)
+	//if err != nil {
+	//
+	//}
 }
 
 func installSignal() {
@@ -67,7 +63,7 @@ func installSignal() {
 
 func main() {
 	installSignal()
-	go PacketTest()
-	lwsockt.RunClient()
+	PacketTest()
+	go lwsockt.RunClient()
 	lwsockt.RunServer()
 }

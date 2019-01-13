@@ -6,14 +6,14 @@ import (
 )
 
 type Packet struct {
-	ver int32
-	mid int32
-	sid int32
-	ext int32
+	ver uint32
+	mid uint32
+	sid uint32
+	ext uint32
 	buf *bytes.Buffer
 }
 
-func NewPacket(mid, sid int32) *Packet {
+func NewPacket(mid, sid uint32) *Packet {
 	return &Packet{
 		ver: 1,
 		mid: mid,
@@ -121,15 +121,15 @@ func (p *Packet) Decode() ([]byte, error) {
 	return data, nil
 }
 
-func (p *Packet) Mid() int32 {
+func (p *Packet) Mid() uint32 {
 	return p.mid
 }
 
-func (p *Packet) Sid() int32 {
+func (p *Packet) Sid() uint32 {
 	return p.sid
 }
 
-func (p *Packet) Ext() int32 {
+func (p *Packet) Ext() uint32 {
 	return p.ext
 }
 

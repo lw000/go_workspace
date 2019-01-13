@@ -37,17 +37,19 @@ func handleConnect(conn net.Conn) {
 				break
 			}
 
-			if n > 0 {
-				log.Error("[%s] read:%s\n", conn.RemoteAddr().String(), buf[0:n])
+			if n < 0 {
+
 			}
 
-			daytime := time.Now().Format("2006-01-02 15:04:05")
-			n, err = conn.Write([]byte(daytime)) // don't care about return value
+			log.Info("[%s] read:%s", conn.RemoteAddr().String(), buf[0:n])
+
+			tm := time.Now().Format("2006-01-02 15:04:05")
+			n, err = conn.Write([]byte(tm))
 			if err != nil {
 
 			}
 
-			if n > 0 {
+			if n < 0 {
 
 			}
 		}
@@ -73,7 +75,7 @@ func RunServer() {
 			continue
 		}
 
-		log.Info(conn.RemoteAddr().String())
+		log.Info("cient: %s", conn.RemoteAddr().String())
 
 		go handleConnect(conn)
 	}
