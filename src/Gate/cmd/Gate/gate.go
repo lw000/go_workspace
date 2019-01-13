@@ -2,6 +2,7 @@ package main
 
 import (
 	"Gate/auth"
+	"Gate/hub"
 	"Gate/packet"
 	"Gate/protocol"
 	"Gate/sock"
@@ -100,6 +101,21 @@ func Test() {
 	if len(data) != 0 {
 		log.Info(data)
 	}
+
+	h := lwhub.NewHub()
+	h.Register(1, 1, func(data []byte) {
+		log.Info("1,1")
+	})
+
+	h.Register(1, 2, func(data []byte) {
+		log.Info("1,2")
+	})
+
+	h.Register(1, 3, func(data []byte) {
+		log.Info("1,3")
+	})
+
+	h.DistMessage(1, 1, 1, []byte("111111111111111111111111"))
 }
 
 func main() {
