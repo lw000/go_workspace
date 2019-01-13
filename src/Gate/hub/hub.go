@@ -45,6 +45,22 @@ func (h *Hub) Register(mid, sid uint16, f HandlerFunc) error {
 	return nil
 }
 
+func (h *Hub) DistMessage(mid, sid uint16, eventId uint32, data []byte) {
+	k := Key{mid: mid, sid: mid}
+	h.m.Range(func(key, value interface{}) bool {
+		if key.(Key) == k {
+			hd := value.(*Handler)
+			item := hd.Get(eventId)
+			if item != nil {
+				item.f(data)
+			}
+			hd.Remove(eventId)
+			return true
+		}
+		return false
+	})
+}
+
 func NewHandler() *Handler {
 	return &Handler{
 		ls: list.New(),
@@ -60,8 +76,18 @@ func (h *Handler) Add(f HandlerFunc) uint32 {
 	return eventId
 }
 
-func (h *Handler) Get() {
+func (h *Handler) Get(eventId uint32) *HandlerItem {
+	h.m.Lock()
+	defer h.m.Unlock()
 
+	var ev *HandlerItem
+	for e := h.ls.Front(); e != nil; e = e.Next() {
+		ev = e.Value.(*HandlerItem)
+		if ev.eventId == eventId {
+			return ev
+		}
+	}
+	return ev
 }
 
 func (h *Handler) Remove(eventId uint32) {
